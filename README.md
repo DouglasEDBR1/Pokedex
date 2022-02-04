@@ -1,4 +1,4 @@
-# teste_pokedex
+# Pokedex
 
 A new Flutter project.
 
