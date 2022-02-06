@@ -4,13 +4,14 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_plus/flutter_plus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:teste_pokedex/models/pokemonColor.dart';
-import '../consts/consts_app.dart';
-import '../controller/pokeapi_controller.dart';
-import '../controller/pokeapiv2_controller.dart';
-import '../models/getStatusPokemon.dart';
-import '../models/poke_api.dart';
-import '../models/pokeapiv2.dart';
-import '../models/species.dart';
+import '../../models/getStatusPokemon.dart';
+import '../../models/poke_api.dart';
+import '../../models/pokeapiv2.dart';
+import '../../models/services/consts_app.dart';
+import '../../models/species.dart';
+import '../../view_model/pokeapi_controller.dart';
+import '../../view_model/pokeapiv2_controller.dart';
+
 
 class PokeDetailPage extends StatefulWidget {
   final int index;

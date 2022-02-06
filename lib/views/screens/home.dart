@@ -4,9 +4,10 @@ import 'package:flutter_plus/flutter_plus.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:teste_pokedex/models/pokemonColor.dart';
-import '../consts/consts_app.dart';
-import '../controller/pokeapi_controller.dart';
+import '../../models/services/consts_app.dart';
+import '../../view_model/pokeapi_controller.dart';
 import 'detail_pokemon.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -160,8 +161,8 @@ class _HomePageState extends State<HomePage> {
                 child: Opacity(
                   child: Image.asset(
                     ConstsApp.whitePokeball,
-                    height: 80,
-                    width: 80,
+                    height: 100,
+                    width: 100,
                   ),
                   opacity: 0.2,
                 ),

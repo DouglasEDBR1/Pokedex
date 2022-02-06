@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:teste_pokedex/screens/home.dart';
-import 'controller/pokeapi_controller.dart';
-import 'controller/pokeapiv2_controller.dart';
+import 'package:teste_pokedex/view_model/pokeapi_controller.dart';
+import 'package:teste_pokedex/view_model/pokeapiv2_controller.dart';
+import 'package:teste_pokedex/views/screens/home.dart';
 
 
 void main(){

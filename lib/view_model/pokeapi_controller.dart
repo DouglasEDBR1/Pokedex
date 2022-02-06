@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:teste_pokedex/models/pokemonColor.dart';
-import '../consts/consts_api.dart';
 import 'package:mobx/mobx.dart';
 import '../models/poke_api.dart';
+import '../models/services/consts_api.dart';
 part 'pokeapi_controller.g.dart';
 
 
