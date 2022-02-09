@@ -8,38 +8,39 @@ part of 'pokeapi_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$PokeApiStore on _PokeApiStoreBase, Store {
+mixin _$PokeApiController on _PokeApiControllerBase, Store {
   Computed<Pokemon?>? _$pokemonCurrentComputed;
 
   @override
   Pokemon? get pokemonCurrent => (_$pokemonCurrentComputed ??=
           Computed<Pokemon?>(() => super.pokemonCurrent,
-              name: '_PokeApiStoreBase.pokemonCurrent'))
+              name: '_PokeApiControllerBase.pokemonCurrent'))
       .value;
-  Computed<PokeApi?>? _$pokeAPIComputed;
+  Computed<List<Pokemon>?>? _$pokemonComputed;
 
   @override
-  PokeApi? get pokeAPI =>
-      (_$pokeAPIComputed ??= Computed<PokeApi?>(() => super.pokeAPI,
-              name: '_PokeApiStoreBase.pokeAPI'))
+  List<Pokemon>? get pokemon =>
+      (_$pokemonComputed ??= Computed<List<Pokemon>?>(() => super.pokemon,
+              name: '_PokeApiControllerBase.pokemon'))
           .value;
 
-  final _$_pokeAPIAtom = Atom(name: '_PokeApiStoreBase._pokeAPI');
+  final _$_pokemonAtom = Atom(name: '_PokeApiControllerBase._pokemon');
 
   @override
-  PokeApi? get _pokeAPI {
-    _$_pokeAPIAtom.reportRead();
-    return super._pokeAPI;
+  List<Pokemon>? get _pokemon {
+    _$_pokemonAtom.reportRead();
+    return super._pokemon;
   }
 
   @override
-  set _pokeAPI(PokeApi? value) {
-    _$_pokeAPIAtom.reportWrite(value, super._pokeAPI, () {
-      super._pokeAPI = value;
+  set _pokemon(List<Pokemon>? value) {
+    _$_pokemonAtom.reportWrite(value, super._pokemon, () {
+      super._pokemon = value;
     });
   }
 
-  final _$_pokemonCurrentAtom = Atom(name: '_PokeApiStoreBase._pokemonCurrent');
+  final _$_pokemonCurrentAtom =
+      Atom(name: '_PokeApiControllerBase._pokemonCurrent');
 
   @override
   Pokemon? get _pokemonCurrent {
@@ -54,7 +55,7 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
     });
   }
 
-  final _$pokemonColorAtom = Atom(name: '_PokeApiStoreBase.pokemonColor');
+  final _$pokemonColorAtom = Atom(name: '_PokeApiControllerBase.pokemonColor');
 
   @override
   dynamic get pokemonColor {
@@ -69,7 +70,8 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
     });
   }
 
-  final _$currentPositionAtom = Atom(name: '_PokeApiStoreBase.currentPosition');
+  final _$currentPositionAtom =
+      Atom(name: '_PokeApiControllerBase.currentPosition');
 
   @override
   int get currentPosition {
@@ -84,50 +86,50 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
     });
   }
 
-  final _$_PokeApiStoreBaseActionController =
-      ActionController(name: '_PokeApiStoreBase');
+  final _$_PokeApiControllerBaseActionController =
+      ActionController(name: '_PokeApiControllerBase');
 
   @override
   dynamic setPokemonCurrent({required int index}) {
-    final _$actionInfo = _$_PokeApiStoreBaseActionController.startAction(
-        name: '_PokeApiStoreBase.setPokemonCurrent');
+    final _$actionInfo = _$_PokeApiControllerBaseActionController.startAction(
+        name: '_PokeApiControllerBase.setPokemonCurrent');
     try {
       return super.setPokemonCurrent(index: index);
     } finally {
-      _$_PokeApiStoreBaseActionController.endAction(_$actionInfo);
+      _$_PokeApiControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic fetchPokemonList() {
-    final _$actionInfo = _$_PokeApiStoreBaseActionController.startAction(
-        name: '_PokeApiStoreBase.fetchPokemonList');
+    final _$actionInfo = _$_PokeApiControllerBaseActionController.startAction(
+        name: '_PokeApiControllerBase.fetchPokemonList');
     try {
       return super.fetchPokemonList();
     } finally {
-      _$_PokeApiStoreBaseActionController.endAction(_$actionInfo);
+      _$_PokeApiControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic getPokemon({required int index}) {
-    final _$actionInfo = _$_PokeApiStoreBaseActionController.startAction(
-        name: '_PokeApiStoreBase.getPokemon');
+    final _$actionInfo = _$_PokeApiControllerBaseActionController.startAction(
+        name: '_PokeApiControllerBase.getPokemon');
     try {
       return super.getPokemon(index: index);
     } finally {
-      _$_PokeApiStoreBaseActionController.endAction(_$actionInfo);
+      _$_PokeApiControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   Widget getImage({required String num}) {
-    final _$actionInfo = _$_PokeApiStoreBaseActionController.startAction(
-        name: '_PokeApiStoreBase.getImage');
+    final _$actionInfo = _$_PokeApiControllerBaseActionController.startAction(
+        name: '_PokeApiControllerBase.getImage');
     try {
       return super.getImage(num: num);
     } finally {
-      _$_PokeApiStoreBaseActionController.endAction(_$actionInfo);
+      _$_PokeApiControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
@@ -137,7 +139,7 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
 pokemonColor: ${pokemonColor},
 currentPosition: ${currentPosition},
 pokemonCurrent: ${pokemonCurrent},
-pokeAPI: ${pokeAPI}
+pokemon: ${pokemon}
     ''';
   }
 }

@@ -3,9 +3,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_plus/flutter_plus.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get_it/get_it.dart';
-import 'package:teste_pokedex/models/pokemonColor.dart';
-import '../../models/services/consts_app.dart';
-import '../../view_model/pokeapi_controller.dart';
+import 'package:teste_pokedex/utils/pokemon_color.dart';
+import '../../controller/pokeapi_controller.dart';
+import '../../utils/consts_app.dart';
 import 'detail_pokemon.dart';
 
 
@@ -18,14 +18,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  final dynamic _pokemonStore = GetIt.I<PokeApiStore>();
+  final dynamic _pokemonController = GetIt.I<PokeApiController>();
 
   @override
   Widget build(BuildContext context) {
 
     var size = MediaQuery.of(context).size;
-    if (_pokemonStore.pokeAPI == null) {
-      _pokemonStore.fetchPokemonList();
+    if (_pokemonController.pokemon == null) {
+      _pokemonController.fetchPokemonList();
     }
 
     return Scaffold(
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                     width: double.infinity,
                     child: Observer(
                       builder: (BuildContext context) {
-                        return (_pokemonStore.pokeAPI != null)
+                        return (_pokemonController.pokemon != null)
                             ? AnimationLimiter(
                           child: GridView.builder(
                             padding: const EdgeInsets.all(12),
@@ -62,13 +62,10 @@ class _HomePageState extends State<HomePage> {
                             gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2),
-                            itemCount: _pokemonStore.pokeAPI?.pokemon?.length,
+                            itemCount: _pokemonController.pokemon?.length,
                             itemBuilder: (context, index) {
 
-                              var pokemonName = _pokemonStore.pokeAPI?.pokemon?[index].name;
-                              var pokemonType = _pokemonStore.pokeAPI?.pokemon![index].type;
-                              var pokemonNum = _pokemonStore.pokeAPI?.pokemon![index].num;
-                              var color = PokemonColor.getColorType(type: pokemonType![0]);
+                              var pokemon = _pokemonController.pokemon?[index];
 
                               return AnimationConfiguration.staggeredGrid(
                                   columnCount: 2,
@@ -80,9 +77,9 @@ class _HomePageState extends State<HomePage> {
                                     padding: const EdgeInsets.all(2),
                                     child: ScaleAnimation(
                                       child: InkWell(
-                                        child: cardPokemon(color, pokemonName!, typesPokemon(pokemonType), 'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/$pokemonNum.png'),
+                                        child: cardPokemon(PokemonColor.getColorType(type: pokemon.type![0]), pokemon.name, typesPokemon(pokemon.type), 'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${pokemon.num}.png'),
                                         onTap: () {
-                                          _pokemonStore.setPokemonCurrent(index: index);
+                                          _pokemonController.setPokemonCurrent(index: index);
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -91,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                                                     AnimationConfiguration.staggeredGrid(
                                                         position: index,
                                                         columnCount: 2,
-                                                        child: PokeDetailPage(index: index, pokemonNum: pokemonNum, pokemonName: pokemonName, pokemonColor: color, pokemonType: pokemonType,)),
+                                                        child: PokeDetailPage(index: index, pokemonNum: pokemon.num, pokemonName: pokemon.name, pokemonColor: PokemonColor.getColorType(type: pokemon.type![0]), pokemonType: pokemon.type,)),
                                                 fullscreenDialog: true,
                                               ));
                                         },
@@ -99,7 +96,6 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   )
                               );
-                              // return ListTile(title: Text(pokeApiStore.pokeAPI.pokemon![index].name),);
                             },
                           ),
                         )
@@ -252,4 +248,3 @@ class _HomePageState extends State<HomePage> {
   }
 
 }
-

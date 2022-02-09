@@ -1,4 +1,4 @@
-import 'package:teste_pokedex/models/pokeapiv2.dart';
+import 'package:teste_pokedex/models/pokemon_v2.dart';
 
 class StatusPokemon{
 
@@ -29,7 +29,6 @@ class StatusPokemon{
       }
     }
     list[6] = sum;
-
     return list;
   }
 }

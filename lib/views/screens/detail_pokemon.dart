@@ -3,23 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_plus/flutter_plus.dart';
 import 'package:get_it/get_it.dart';
-import 'package:teste_pokedex/models/pokemonColor.dart';
-import '../../models/getStatusPokemon.dart';
-import '../../models/poke_api.dart';
-import '../../models/pokeapiv2.dart';
-import '../../models/services/consts_app.dart';
-import '../../models/species.dart';
-import '../../view_model/pokeapi_controller.dart';
-import '../../view_model/pokeapiv2_controller.dart';
+import 'package:teste_pokedex/controller/pokeapi_controller.dart';
+import '../../controller/pokeapiv2_controller.dart';
+import '../../models/get_status_pokemon.dart';
+import '../../models/pokemon.dart';
+import '../../models/pokemon_v2.dart';
+import '../../utils/pokemon_color.dart';
+import '../../models/pokemon_species.dart';
+import '../../utils/consts_app.dart';
 
 
 class PokeDetailPage extends StatefulWidget {
+
   final int index;
   final dynamic pokemonNum;
   final String pokemonName;
   final dynamic pokemonColor;
   final dynamic pokemonType;
-
 
   const PokeDetailPage({Key? key, required this.index, required this.pokemonNum, required this.pokemonName, this.pokemonColor, this.pokemonType}) : super(key: key);
 
@@ -30,7 +30,7 @@ class PokeDetailPage extends StatefulWidget {
 class _PokeDetailPageState extends State<PokeDetailPage> with TickerProviderStateMixin {
 
   PokeApiV2Store? _pokeApiV2Store;
-  PokeApiStore? _pokemonStore;
+  PokeApiController? _pokeApiController;
   Animation? rotationAnimation;
   PokeApiV2? pokeApiV2;
   PokemonColor? pokemonColor;
@@ -49,10 +49,10 @@ class _PokeDetailPageState extends State<PokeDetailPage> with TickerProviderStat
   @override
   void initState() {
     super.initState();
-    _pokemonStore = GetIt.I<PokeApiStore>();
+    _pokeApiController = GetIt.I<PokeApiController>();
     _pokeApiV2Store = GetIt.I<PokeApiV2Store>();
-    if (_pokemonStore?.pokeAPI == null) {
-      _pokemonStore?.fetchPokemonList();
+    if (_pokeApiController?.pokemon == null) {
+      _pokeApiController?.fetchPokemonList();
       _controller.dispose();
     }
   }
@@ -268,14 +268,14 @@ class _PokeDetailPageState extends State<PokeDetailPage> with TickerProviderStat
           _pokeApiV2Store?.getInfoPokemon(widget.pokemonName.toLowerCase());
           _pokeApiV2Store?.getInfoSpecie(widget.pokemonName.toLowerCase());
 
-          var pokemonHeight = _pokemonStore?.pokemonCurrent?.height;
-          var pokemonWeight = _pokemonStore?.pokemonCurrent?.weight;
+          var pokemon = _pokeApiController?.pokemonCurrent;
 
           Specie? _pokemonGenera = _pokeApiV2Store?.specie;
           String? pokemonSpecie = _pokemonGenera?.genera!.where((item) => item.language?.name == 'en').first.genus;
 
           Specie? _specie = _pokeApiV2Store?.specie;
           String? pokemonAbout = _specie?.flavorTextEntries?.where((item) => item.language?.name == 'en').first.flavorText;
+
           pokemonAbout = pokemonAbout?.replaceAll('\n', ' ');
 
           if (_specie != null) {
@@ -328,7 +328,7 @@ class _PokeDetailPageState extends State<PokeDetailPage> with TickerProviderStat
                                   padding: const EdgeInsets.only(bottom: 13),
                                 ),
                                 TextPlus(
-                                  pokemonHeight,
+                                  pokemon!.height,
                                   fontSize: 16,
                                   color: Colors.black,
                                   textAlign: TextAlign.left,
@@ -347,7 +347,7 @@ class _PokeDetailPageState extends State<PokeDetailPage> with TickerProviderStat
                                   padding: const EdgeInsets.only(bottom: 13),
                                 ),
                                 TextPlus(
-                                  pokemonWeight,
+                                  pokemon.weight,
                                   fontSize: 16,
                                   color: Colors.black,
                                   textAlign: TextAlign.left,
@@ -620,7 +620,7 @@ class _PokeDetailPageState extends State<PokeDetailPage> with TickerProviderStat
 
   List<Widget> getEvolutions() {
     List<Widget> _list = [];
-    Pokemon pokemon = _pokemonStore!.pokemonCurrent!;
+    Pokemon pokemon = _pokeApiController!.pokemonCurrent!;
     if (pokemon.prevEvolution != null){
       pokemon.prevEvolution?.forEach((element) {
         _list.add(
@@ -630,7 +630,7 @@ class _PokeDetailPageState extends State<PokeDetailPage> with TickerProviderStat
               ContainerPlus(
                   width: 80,
                   height: 80,
-                  child: _pokemonStore!.getImage(num: element.num!)),
+                  child: _pokeApiController!.getImage(num: element.num!)),
               TextPlus(
                 element.name,
                 fontSize: 14,
@@ -651,9 +651,9 @@ class _PokeDetailPageState extends State<PokeDetailPage> with TickerProviderStat
           ContainerPlus(
               width: 80,
               height: 80,
-              child: _pokemonStore!.getImage(num: _pokemonStore!.pokemonCurrent!.num!)),
+              child: _pokeApiController!.getImage(num: _pokeApiController!.pokemonCurrent!.num!)),
           TextPlus(
-            _pokemonStore!.pokemonCurrent!.name,
+            _pokeApiController!.pokemonCurrent!.name,
             fontSize: 14,
             padding: const EdgeInsets.only(top: 12),
             fontWeight: FontWeight.w500,
@@ -671,7 +671,7 @@ class _PokeDetailPageState extends State<PokeDetailPage> with TickerProviderStat
               ContainerPlus(
                   width: 80,
                   height: 80,
-                  child: _pokemonStore!.getImage(num: element.num!)),
+                  child: _pokeApiController!.getImage(num: element.num!)),
               TextPlus(
                 element.name,
                 fontSize: 14,
@@ -727,5 +727,4 @@ class _PokeDetailPageState extends State<PokeDetailPage> with TickerProviderStat
   }
 
 }
-
 
