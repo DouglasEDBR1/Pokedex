@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: [
           Positioned(
-            top: -(242 / 3.4),
+            top: -(240 / 3.4),
             left: size.width - (240 / 1.6),
             child: Opacity(opacity: 0.1,
                 child: Image.asset(ConstsApp.darkPokeball,
@@ -117,6 +117,7 @@ class _HomePageState extends State<HomePage> {
 
 
   //  ####################    METHODS   #####################
+  
 
 
   // ############# CARD POKEMON ################
